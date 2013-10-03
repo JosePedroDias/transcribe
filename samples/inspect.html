@@ -1,29 +1,13 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
+
 		<title>inspect</title>
 
 		<script type="text/javascript" src="../lib/transcribe.js"></script>
 
-		<style type="text/css">
-			#graph-container {
-				position: relative;
-				background-color: #DDD;
-				display: inline-block;
-			}
-
-			#graph-container span {
-				position: absolute;
-				top: 0;
-				left: 0%;
-				width: 1px;
-				height: 100%;
-				background-color: green;
-			}
-
-			video {
-				display: none;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="transcribe.css">
 	</head>
 
 	<body>
@@ -33,9 +17,31 @@
 			<canvas height="128"></canvas>
 			<span></span>
 		</div>
+		<br/>
+
+		<select id="url">
+			<option>V http://rd3.videos.sapo.pt/kkfVILjVh7eRRhSRQ0AL/mov/1</option>
+			<option>A http://feeds.tsf.pt/~r/Tsf-SinaisT/~5/wVE-bp5C_JA/sin_20131001.mp3</option>
+			<option>A http://feeds.tsf.pt/~r/TSF-TuboEnsaio/~5/Do--C8UiC5I/tub_20131002.mp3</option>
+		</select>
+
+		<button id="inspect">inspect</button>
+		<button onclick="mediaEl.play()">play</button>
+		<button onclick="mediaEl.pause()">pause</button>
+		<button onclick="mediaEl.currentTime = 0">stop</button>
 
 		<script type="text/javascript">
-			Transcribe.inspect('http://rd3.videos.sapo.pt/kkfVILjVh7eRRhSRQ0AL/mov/1');
+			var urlEl     = document.querySelector('#url');
+			var inspectEl = document.querySelector('#inspect');
+			var mediaEl;
+
+			inspectEl.addEventListener('click', function() {
+				var pair = urlEl.value.split(' ');
+				var kind = pair[0];
+				var url  = pair[1];
+				console.log('inspecting %s...', url);
+				mediaEl = Transcribe.inspect(url, kind === 'A');
+			});
 		</script>
 	</body>
 </html>
