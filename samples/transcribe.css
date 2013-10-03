@@ -17,6 +17,21 @@ body {
 	background-color: green;
 }
 
-audio, video {
+audio,
+video {
 	display: none;
+}
+
+audio.show,
+video.show {
+	display: inherit;
+}
+
+textarea {
+	font-size: 20px;
+	width: 80%;
+}
+
+.current {
+	background-color: yellow;
 }

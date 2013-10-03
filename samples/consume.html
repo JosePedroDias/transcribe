@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>inspect</title>
+
+		<script type="text/javascript" src="../lib/transcribe.js"></script>
+		<script type="text/javascript" src="../lib/comm.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="transcribe.css">
+	</head>
+
+	<body>
+		<h1>transcribe samples: consume</h1>
+
+	<p>
+		<label for="m-url">media url:</label>
+		<input id="m-url" type="text" value="V v1.mp4">
+	</p>
+	<p>
+		<label for="t-url">transcript url:</label>
+		<input id="t-url" type="text" value="v1.json">
+	</p>
+
+	<button id="consume">consume</button>
+
+		<script type="text/javascript">
+			var mUrlEl    = document.querySelector('#m-url');
+			var tUrlEl    = document.querySelector('#t-url');
+			var consumeEl = document.querySelector('#consume');
+			var mediaEl;
+
+			consumeEl.addEventListener('click', function() {
+				var pair = mUrlEl.value.split(' ');
+				var kind = pair[0];
+				var mUrl = pair[1];
+				var tUrl = tUrlEl.value;
+				console.log('consuming %s with %s...', mUrl, tUrl);
+				mediaEl = Transcribe.consume(mUrl, kind === 'A', tUrl);
+			});
+		</script>
+	</body>
+</html>
+
