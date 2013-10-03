@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>inspect</title>
+
+		<script type="text/javascript" src="../lib/transcribe.js"></script>
+
+		<style type="text/css">
+			#graph-container {
+				position: relative;
+				background-color: #DDD;
+				display: inline-block;
+			}
+
+			#graph-container span {
+				position: absolute;
+				top: 0;
+				left: 0%;
+				width: 1px;
+				height: 100%;
+				background-color: green;
+			}
+
+			video {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>transcribe samples: inspect</h1>
+
+		<div id="graph-container">
+			<canvas height="128"></canvas>
+			<span></span>
+		</div>
+
+		<script type="text/javascript">
+			Transcribe.inspect('http://rd3.videos.sapo.pt/kkfVILjVh7eRRhSRQ0AL/mov/1');
+		</script>
+	</body>
+</html>
