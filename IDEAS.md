@@ -4,14 +4,14 @@
 ## 1 - full transcription and karaoke
 
 * write whole text
-* play and press key at every work start
+* play media and press key at every word start
 
 
 ## 2 - captcha chunks and reduce
 
 * divide video into smaller chunks
 * serve chunks to several people, store different sub-texts
-* WHEN?! reduce proposals into highent ranked words
+* <somewhat point in time after criteria is met> reduce submitted proposals into highest ranked words
 
 
 ## 3 - speech recognition, human validation
