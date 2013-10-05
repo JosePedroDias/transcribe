@@ -17,6 +17,30 @@ body {
 	background-color: green;
 }
 
+label {
+  font-weight: bold;
+  display: inline-block;
+  width: 130px;
+}
+
+button {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #DDD;
+  background-color: #333;
+  padding: 6px;
+  border-radius: 4px;
+  border: 0;
+}
+
+button:hover,
+button:active {
+  color: #FFF;
+  background-color: #000;
+  text-shadow: 0 0 4px #AA0;
+}
+
 audio,
 video {
 	display: none;
@@ -34,4 +58,10 @@ textarea {
 
 .current {
 	background-color: yellow;
+}
+
+#trans {
+  font-size: 14px;
+  width:  600px;
+  height: 300px;
 }

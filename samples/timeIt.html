@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>timeIt</title>
+
+		<script type="text/javascript" src="../lib/transcribe.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="transcribe.css">
+	</head>
+
+	<body>
+		<h1>transcribe samples: timeIt</h1>
+
+    <video controls loop class="show" style="float: right"></video>
+	<p>
+		<label for="url">media url:</label>
+		<input id="url" type="text" value="">
+    <span id="secondsLeft"></span>
+	</p>
+
+  <p>
+		<label for="speed">speed:</label>
+		<input id="speed" type="range" min="0.3" step="0.1" max="1.9" value="0.3">
+    <span id="speed2"></span> x
+	</p>
+
+  <div id="step1">
+    <p>
+      <label for="trans">transcription:</label><br/>
+      <textarea id="trans"></textarea>
+    </p>
+
+    <button id="parse">parse transcription</button>
+  </div>
+
+  <div id="step2" style="display:none">
+    <div id="words"></div>
+
+    <button id="mark">mark word</button>
+    <button id="export">export</button>
+  </div>
+
+		<script type="text/javascript">
+      var videoEl  = document.querySelector('video');
+			var urlEl    = document.querySelector('#url');
+      var slEl     = document.querySelector('#secondsLeft');
+      var speedEl  = document.querySelector('#speed');
+      var speed2El = document.querySelector('#speed2');
+
+      var step1El  = document.querySelector('#step1');
+      var transEl  = document.querySelector('#trans');
+			var parseEl  = document.querySelector('#parse');
+
+      var step2El  = document.querySelector('#step2');
+      var wordsEl  = document.querySelector('#words');
+      var markEl   = document.querySelector('#mark');
+      var exportEl = document.querySelector('#export');
+
+
+      var applySpeed = function() {
+        var sp = speedEl.value;
+        speed2El.innerHTML   = sp;
+        videoEl.playbackRate = sp;
+      }
+
+
+
+      // load
+      urlEl.value   = localStorage.getItem('url')   || 'v1.mp4';
+      speedEl.value = localStorage.getItem('speed') || 1;
+      transEl.value = localStorage.getItem('trans') || '';
+      applySpeed();
+
+
+      // save
+      window.addEventListener('beforeunload', function() {
+        localStorage.setItem('url',   urlEl.value);
+        localStorage.setItem('speed', speedEl.value);
+        localStorage.setItem('trans', transEl.value);
+      });
+
+
+
+      speedEl.addEventListener('change', applySpeed);
+
+
+
+      // go...
+      transEl.focus();
+
+      var tryLoad = function() {
+        try {
+          var url = urlEl.value;
+          videoEl.src = url;
+          videoEl.load();
+          videoEl.playbackRate = speedEl.value;
+
+          var secondsLeft = 3;
+          var timer = setInterval(function() {
+            if (!secondsLeft) {
+              clearInterval(timer);
+              slEl.innerHTML = '';
+              return videoEl.play();
+            }
+
+            slEl.innerHTML = secondsLeft;
+            --secondsLeft;
+          }, 1000);
+        } catch(ex) {
+          slEl.innerHTML = url + ' load failed!';
+        }
+      };
+
+      tryLoad();
+      urlEl.addEventListener('change', tryLoad);
+
+
+      var getState;
+
+      parseEl.addEventListener('click', function() {
+        step1.style.display = 'none';
+        step2.style.display = '';
+
+        var txt = transEl.value;
+        getState = Transcribe.timeIt(txt, words);
+      });
+
+
+      markEl.addEventListener('click', function() {
+        alert('TODO');
+      });
+
+
+      exportEl.addEventListener('click', function() {
+        step1.style.display = '';
+        step2.style.display = 'none';
+        transEl.value = getState();
+      });
+		</script>
+	</body>
+</html>
+

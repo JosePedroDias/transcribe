@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>shoot</title>
+
+		<script type="text/javascript" src="../lib/transcribe.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="transcribe.css">
+	</head>
+
+	<body>
+		<h1>transcribe samples: shoot</h1>
+
+	<p>
+		<label for="url">video url:</label>
+		<input id="url" type="text" value="v1.mp4">
+	</p>
+
+  <p>
+		<label for="time">time:</label>
+		<input id="time" type="range" min="0" step="0.1" value="0">
+    <span id="ct">0.0</span> / <span id="d"></span>
+	</p>
+
+	<button id="load">load</button>
+  <button id="shoot">shoot</button>
+  <br/>
+
+		<script type="text/javascript">
+			var urlEl   = document.querySelector('#url');
+      var timeEl  = document.querySelector('#time');
+      var ctEl    = document.querySelector('#ct');
+      var dEl     = document.querySelector('#d');
+      var loadEl  = document.querySelector('#load');
+			var shootEl = document.querySelector('#shoot');
+
+      loadEl.addEventListener('click', function() {
+        loadEl.setAttribute('disabled', '');
+        var url = urlEl.value;
+				console.log('loading %s...', url);
+        var videoEl = Transcribe.shoot(url, 0.25, function(err, duration, dims, tp) {
+          //console.log('dims: %d x %d, duration: %.2f s', dims[0], dims[1], duration);
+
+          timeEl.setAttribute('max', Math.floor(duration));
+          dEl.innerHTML = duration.toFixed(1) + ' s';
+
+          timeEl.addEventListener('change', function() {
+            var t = timeEl.value;
+            ctEl.innerHTML = Number(t).toFixed(1);
+            videoEl.currentTime = t;
+          });
+
+          shootEl.addEventListener('click', function() {
+            var src = tp();
+          });
+        });
+      });
+		</script>
+	</body>
+</html>
+
